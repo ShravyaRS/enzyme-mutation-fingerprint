@@ -1,0 +1,19 @@
+cd scripts
+notepad structure_parser.py
+from Bio.PDB.MMCIFParser import MMCIFParser
+
+def parse_structure(file_path):
+    parser = MMCIFParser(QUIET=True)
+    structure = parser.get_structure("enzyme", file_path)
+
+    for model in structure:
+        for chain in model:
+            print(f"Chain {chain.id}")
+            for residue in chain:
+                if residue.id[0] == ' ':
+                    res_id = residue.id[1]
+                    res_name = residue.resname
+                    print(f"Residue {res_name} at position {res_id}")
+
+if __name__ == "__main__":
+    parse_structure("../data/1lox.cif")  # change this to 1six.cif or any other as needed
