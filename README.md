@@ -36,4 +36,16 @@ You can install the dependencies by running the following:
 
 ```bash
 pip install -r requirements.txt
+## Installation
+
+To set up the environment and run this project, follow these steps:
+
+### Step 1: Clone the repository
+First, clone this repository to your local machine using Git:
+
+```bash
+git clone https://github.com/ShravyaRS/enzyme-mutation-fingerprint.git
+cd enzyme-mutation-fingerprint
+python -m venv venv
+venv\Scripts\activate
 
