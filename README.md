@@ -54,3 +54,26 @@ source venv/bin/activate
 
 Install dependencies
 pip install -r requirements.txt
+
+Script Overview
+scripts/fingerprint_encoder.py: This script encodes the amino acid sequences into binary fingerprints based on their physicochemical properties.
+
+scripts/structure_parser.py: This script parses enzyme structure files (MM-CIF format) to extract relevant data points like residues, chain IDs, and atom coordinates.
+
+scripts/mutation_impact_matrix.py: This script builds a mutation co-impact matrix to evaluate the interactions and potential impacts of mutations.
+
+scripts/test_script.py: A simple test script to check if the Git setup and scripts are functioning as expected
+
+To run the test script:
+bash
+Copy code
+python scripts/test_script.py
+
+Contribution
+Feel free to fork the repository and submit pull requests for improvements. Issues can be raised in the Issues tab for any bugs or feature requests.
+
+Note: The test script is designed to ensure all other scripts are functioning correctly. If you encounter any issues with the test script, double-check that your environment is set up properly and that all dependencies are installed.
+
+
+
+
