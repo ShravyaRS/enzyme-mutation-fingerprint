@@ -1,2 +1,4 @@
 biopython
 numpy
+git add requirements.txt README.md
+
