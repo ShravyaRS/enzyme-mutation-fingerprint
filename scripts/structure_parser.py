@@ -1,19 +1,20 @@
-from Bio.PDB.MMCIFParser import MMCIFParser
-from fingerprint_encoder import encode_amino_acid
+def parse_pdb(pdb_file):
+    """Extracts the amino acid sequence from a PDB file and encodes each residue."""
+    sequence = []
+    with open(pdb_file, 'r') as file:
+        for line in file:
+            if line.startswith("ATOM") and line[13:15].strip() == "CA":  # Only alpha-carbon atoms
+                resname = line[17:20].strip()  # Amino acid name
+                sequence.append(resname)
+    return sequence
 
-def parse_structure(file_path):
-    parser = MMCIFParser(QUIET=True)
-    structure = parser.get_structure("enzyme", file_path)
-
-    for model in structure:
-        for chain in model:
-            print(f"\n--- Chain {chain.id} ---")
-            for residue in chain:
-                if residue.id[0] == ' ':
-                    res_id = residue.id[1]
-                    res_name = residue.resname
-                    fingerprint = encode_amino_acid(res_name)
-                    print(f"Residue {res_name} at position {res_id} → {fingerprint}")
+def encode_sequence(sequence):
+    """Encodes an entire amino acid sequence into binary fingerprints."""
+    fingerprints = [encode_amino_acid(res) for res in sequence]
+    return fingerprints
 
 if __name__ == "__main__":
-    parse_structure("data/1lox.cif")
+    pdb_file = "data/lox.pdb"  # Adjust to your file path
+    sequence = parse_pdb(pdb_file)
+    fingerprints = encode_sequence(sequence)
+    print(f"Encoded sequence: {fingerprints}")
