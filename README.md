@@ -61,10 +61,14 @@ Integrate AlphaFold2 predicted mutations
 Predict disease-linked residue vulnerability
 Extend to multi-enzyme mutation resilience clusters
 
-🧬 Credits
-Sequence & structure: RCSB PDB
-Py3Dmol for structure visualization
-Created as part of a bioinformatics research initiative
+🔬 Mutation Visualization
+This project includes visualization tools that allow you to observe mutations on the 3D structures of enzymes.
+Py3Dmol: A Python-based visualization tool that renders enzyme structures and highlights mutated residues.
+Steps to Visualize:
+Run scripts/visualize_pdb.py to load and visualize enzyme structures.
+Mutations are highlighted in a distinct color to show their positions on the enzyme.
+You can rotate and zoom in the 3D view to better analyze mutation impacts.
+
 
 🧬 Mutation Prediction and Analysis
 This project involves analyzing mutations in two enzymes, Lysyl Oxidase (LOX) and Glutamate Decarboxylase (GAD), to study their resilience using binary fingerprint encoding and mutation co-impact matrices. The mutation prediction process can be divided into several stages:
@@ -92,3 +96,8 @@ AlphaFold Integration: Integrate AlphaFold2 predictions to enhance the accuracy 
 Mutation Prediction Enhancement: Implement tools like SIFT or PolyPhen to predict the functional impact of mutations on enzyme stability and function.
 Interactive Mutation Visualizations: Develop interactive visualizations using Py3Dmol or other tools to view mutations directly on 3D structures of enzymes, with color-coded mutation hotspots and residue interactions.
 Multi-enzyme Mutation Clustering: Extend the analysis to multiple enzymes to generate mutation resilience clusters, identifying broader mutation patterns and evolutionary insights.
+
+🧬 Credits
+Sequence & structure: RCSB PDB
+Py3Dmol for structure visualization
+Created as part of a bioinformatics research initiative
