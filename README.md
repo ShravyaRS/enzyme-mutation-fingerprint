@@ -1,5 +1,5 @@
 # Enzyme Mutation Fingerprint Analysis
-
+ 
 This project focuses on **mutation resilience analysis** in enzymes using **binary fingerprint encoding** and **dual mutation co-impact matrices**. The two enzymes analyzed are:
 
 - **Lysyl Oxidase (LOX)** – involved in connective tissue cross-linking
