@@ -70,26 +70,28 @@ Mutations are highlighted in a distinct color to show their positions on the enz
 You can rotate and zoom in the 3D view to better analyze mutation impacts.
 
 
-🧬 Mutation Prediction and Analysis
-This project involves analyzing mutations in two enzymes, Lysyl Oxidase (LOX) and Glutamate Decarboxylase (GAD), to study their resilience using binary fingerprint encoding and mutation co-impact matrices. The mutation prediction process can be divided into several stages:
-1. Mutation Data Collection:
-Mutations in the enzyme sequences are collected from public mutation databases or experimental data (if available).
-You can also predict potential mutations using tools like AlphaFold2 for structure-based mutation analysis.
-2. Mutation Mapping:
-Predicted or known mutations are mapped onto the enzyme's amino acid sequence.
-Mutations are categorized into specific residue positions and the type of change (e.g., substitution, insertion, or deletion).
-3. Mutation Fingerprint Encoding:
-Each mutation is encoded as a binary fingerprint representing the altered residue's properties.
-This encoding helps analyze the impact of mutations on enzyme function by comparing differences in polarity, charge, hydrophobicity, and other characteristics of amino acids.
-4. Mutation Hotspot Identification:
-Areas in the enzyme sequence where mutations frequently occur or have high functional impact are identified as mutation hotspots.
-These hotspots are visualized in the enzyme's 3D structure, highlighting residues that may be crucial for function or stability.
-5. Co-impact Matrix Generation:
-A mutation co-impact matrix is generated to understand how mutations in one part of the enzyme might affect other regions or residues.
-This matrix can help identify residue pairs that are more likely to influence each other’s functionality when mutated.
-6. Potential Disease Association:
-The predicted mutations are analyzed for their potential links to diseases or functional deficiencies.
-Mutation mapping with disease-linked databases like ClinVar or dbSNP can provide further insights.
+🔬 Mutation Visualization
+This project includes tools to visualize mutations on the 3D structures of enzymes, aiding in the identification of mutation-sensitive regions and structure-preserving zones.
+
+🧪 Tools Used
+Py3Dmol: A Python-based visualization tool that renders enzyme structures and highlights mutated residues.
+
+🖼️ How to Visualize Mutations
+Run the Visualization Script: Execute the scripts/visualize_pdb.py script to load and visualize the enzyme structures.
+
+bash
+Copy
+Edit
+python scripts/visualize_pdb.py
+Input Files: The script requires the following input files:
+A PDB file containing the enzyme structure (e.g., 1SIX.pdb).
+A list of mutations to be visualized.
+
+Output: The script generates an interactive 3D visualization of the enzyme structure with mutated residues highlighted in a distinct color.
+Interactive Exploration: Users can rotate and zoom in the 3D view to better analyze mutation impacts.
+
+📌 Example
+Note: Replace path/to/your/example_image.png with the actual path to an example image showcasing the mutation visualization.
 
 🔮 Future Work
 AlphaFold Integration: Integrate AlphaFold2 predictions to enhance the accuracy of mutation models, helping to predict the effect of mutations on the 3D structure of enzymes.
