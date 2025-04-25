@@ -1,3 +1,4 @@
-```txt
-biopython
+numpy
+seaborn
+matplotlib
 py3Dmol
