@@ -37,7 +37,7 @@ pip install -r requirements.txt
   
 ### 3. **Usage Instructions**
 
-Explain how to use each script in your project.
+Explaination to how to use each script in this project-
 
 #### Example:
 ```markdown
@@ -55,8 +55,7 @@ python scripts/fingerprint_encoder.py
 
 ### 4. **Detailed Explanation of Scripts**
 
-Provide a brief explanation of what each script does. This helps users understand how the code works and how to use it effectively.
-
+Brief explanation of what each script does. 
 #### Example:
 ```markdown
 ## Scripts
