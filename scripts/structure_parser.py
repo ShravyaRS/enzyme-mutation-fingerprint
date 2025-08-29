@@ -21,7 +21,7 @@ def parse_structure(file_path):
 
 
 def encode_amino_acid(resname):
-    """Example encoder: convert residue name into a simple one-hot vector (customize later)."""
+    """Encodes a residue into a one-hot vector (basic fingerprint)."""
     amino_acids = [
         "ALA","ARG","ASN","ASP","CYS","GLN","GLU","GLY",
         "HIS","ILE","LEU","LYS","MET","PHE","PRO","SER",
@@ -32,14 +32,14 @@ def encode_amino_acid(resname):
 
 
 def encode_sequence(sequence):
-    """Encodes entire amino acid sequence into binary fingerprints."""
+    """Encodes entire amino acid sequence into fingerprints."""
     return [encode_amino_acid(res) for res in sequence]
 
 
 if __name__ == "__main__":
-    file_path = "data/1lox.cif"  # Change to whichever structure you want
+    file_path = "data/1lox.cif"  # Update this path to your structure
     sequence = parse_structure(file_path)
     fingerprints = encode_sequence(sequence)
-    print(f"Extracted sequence length: {len(sequence)}")
-    print(f"First 5 residues: {sequence[:5]}")
-    print(f"First 5 fingerprints: {fingerprints[:5]}")
+    print(f"✅ Extracted sequence length: {len(sequence)}")
+    print(f"🔹 First 5 residues: {sequence[:5]}")
+    print(f"🔹 First 5 fingerprints: {fingerprints[:5]}")
