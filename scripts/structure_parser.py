@@ -1,3 +1,4 @@
+import os
 from Bio.PDB import PDBParser, MMCIFParser
 
 def parse_structure(file_path):
@@ -7,7 +8,7 @@ def parse_structure(file_path):
     elif file_path.endswith(".cif"):
         parser = MMCIFParser(QUIET=True)
     else:
-        raise ValueError("Unsupported file format. Use .pdb or .cif")
+        return []
 
     structure = parser.get_structure("structure", file_path)
 
@@ -15,20 +16,19 @@ def parse_structure(file_path):
     for model in structure:
         for chain in model:
             for residue in chain:
-                if "CA" in residue:  # Use alpha-carbon only
+                if "CA" in residue:  # Alpha-carbon only
                     sequence.append(residue.get_resname())
     return sequence
 
 
 def encode_amino_acid(resname):
-    """Encodes a residue into a one-hot vector (basic fingerprint)."""
+    """Encodes a residue into a one-hot vector."""
     amino_acids = [
         "ALA","ARG","ASN","ASP","CYS","GLN","GLU","GLY",
         "HIS","ILE","LEU","LYS","MET","PHE","PRO","SER",
         "THR","TRP","TYR","VAL"
     ]
-    vector = [1 if resname == aa else 0 for aa in amino_acids]
-    return vector
+    return [1 if resname == aa else 0 for aa in amino_acids]
 
 
 def encode_sequence(sequence):
@@ -37,9 +37,14 @@ def encode_sequence(sequence):
 
 
 if __name__ == "__main__":
-    file_path = "data/1lox.cif"  # Update this path to your structure
-    sequence = parse_structure(file_path)
-    fingerprints = encode_sequence(sequence)
-    print(f"✅ Extracted sequence length: {len(sequence)}")
-    print(f"🔹 First 5 residues: {sequence[:5]}")
-    print(f"🔹 First 5 fingerprints: {fingerprints[:5]}")
+    data_dir = "data"
+    for file_name in os.listdir(data_dir):
+        if file_name.endswith((".pdb", ".cif")):
+            file_path = os.path.join(data_dir, file_name)
+            try:
+                sequence = parse_structure(file_path)
+                fingerprints = encode_sequence(sequence)
+                print(f"✅ {file_name}: length={len(sequence)}")
+                print(f"   First 5 residues: {sequence[:5]}")
+            except Exception as e:
+                print(f"❌ Error with {file_name}: {e}")
