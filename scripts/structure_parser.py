@@ -1,38 +1,45 @@
-import argparse
+from Bio.PDB import PDBParser, MMCIFParser
 
-def parse_pdb(pdb_file):
-    """Extracts the amino acid sequence from a PDB file and encodes each residue."""
+def parse_structure(file_path):
+    """Parses a structure file (.pdb or .cif) and extracts amino acid sequence."""
+    if file_path.endswith(".pdb"):
+        parser = PDBParser(QUIET=True)
+    elif file_path.endswith(".cif"):
+        parser = MMCIFParser(QUIET=True)
+    else:
+        raise ValueError("Unsupported file format. Use .pdb or .cif")
+
+    structure = parser.get_structure("structure", file_path)
+
     sequence = []
-    with open(pdb_file, 'r') as file:
-        for line in file:
-            if line.startswith("ATOM") and line[13:15].strip() == "CA":  # Only alpha-carbon atoms
-                resname = line[17:20].strip()  # Amino acid name
-                sequence.append(resname)
+    for model in structure:
+        for chain in model:
+            for residue in chain:
+                if "CA" in residue:  # Use alpha-carbon only
+                    sequence.append(residue.get_resname())
     return sequence
 
-def encode_amino_acid(residue):
-    """Simple example encoder: convert residue names into binary-like fingerprints."""
+
+def encode_amino_acid(resname):
+    """Example encoder: convert residue name into a simple one-hot vector (customize later)."""
     amino_acids = [
-        'ALA','ARG','ASN','ASP','CYS','GLN','GLU','GLY','HIS','ILE',
-        'LEU','LYS','MET','PHE','PRO','SER','THR','TRP','TYR','VAL'
+        "ALA","ARG","ASN","ASP","CYS","GLN","GLU","GLY",
+        "HIS","ILE","LEU","LYS","MET","PHE","PRO","SER",
+        "THR","TRP","TYR","VAL"
     ]
-    fingerprint = [0] * len(amino_acids)
-    if residue in amino_acids:
-        fingerprint[amino_acids.index(residue)] = 1
-    return fingerprint
+    vector = [1 if resname == aa else 0 for aa in amino_acids]
+    return vector
+
 
 def encode_sequence(sequence):
-    """Encodes an entire amino acid sequence into binary fingerprints."""
-    fingerprints = [encode_amino_acid(res) for res in sequence]
-    return fingerprints
+    """Encodes entire amino acid sequence into binary fingerprints."""
+    return [encode_amino_acid(res) for res in sequence]
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Parse a PDB file and encode sequence")
-    parser.add_argument("--pdb", required=True, help="Path to the PDB file")
-    args = parser.parse_args()
-
-    sequence = parse_pdb(args.pdb)
+    file_path = "data/1lox.cif"  # Change to whichever structure you want
+    sequence = parse_structure(file_path)
     fingerprints = encode_sequence(sequence)
-
-    print(f"Parsed sequence length: {len(sequence)} residues")
-    print(f"Encoded sequence (first 5 residues): {fingerprints[:5]}")
+    print(f"Extracted sequence length: {len(sequence)}")
+    print(f"First 5 residues: {sequence[:5]}")
+    print(f"First 5 fingerprints: {fingerprints[:5]}")
