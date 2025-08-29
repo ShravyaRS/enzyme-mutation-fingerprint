@@ -10,7 +10,7 @@ RESULT_JSON = os.path.join(DATA_DIR, "encoded_sequences.json")
 RESULT_CSV = os.path.join(DATA_DIR, "encoded_sequences.csv")
 RESULTS_PLOT_DIR = os.path.join(DATA_DIR, "plots")
 
-# Amino acid mapping (one-hot encoding)
+# Amino acid mapping (20 canonical)
 AMINO_ACIDS = [
     "ALA", "ARG", "ASN", "ASP", "CYS",
     "GLN", "GLU", "GLY", "HIS", "ILE",
@@ -35,24 +35,36 @@ def parse_structure(file_path):
     for model in structure:
         for chain in model:
             for residue in chain:
-                if "CA" in residue:  # Alpha carbon filter
+                if "CA" in residue:  # Use alpha-carbon filter
                     sequence.append(residue.get_resname())
     return sequence
 
 def save_results(all_results):
-    """Save extracted data to JSON and CSV."""
+    """Save extracted data to JSON and enriched CSV (with AA frequencies)."""
     os.makedirs(DATA_DIR, exist_ok=True)
 
-    # JSON full detail
+    # JSON full dataset
     with open(RESULT_JSON, "w") as jf:
         json.dump(all_results, jf, indent=4)
 
-    # CSV summary
+    # CSV summary + amino acid frequencies
     with open(RESULT_CSV, "w", newline="") as cf:
         writer = csv.writer(cf)
-        writer.writerow(["File", "Length", "First_5_Residues"])
+
+        # Header: file, length, first residues + 20 AA columns
+        header = ["File", "Length", "First_5_Residues"] + AMINO_ACIDS
+        writer.writerow(header)
+
         for fname, data in all_results.items():
-            writer.writerow([fname, len(data["sequence"]), " ".join(data["sequence"][:5])])
+            seq = data["sequence"]
+            length = len(seq)
+            first5 = " ".join(seq[:5])
+            counts = Counter(seq)
+
+            # Frequency counts for all 20 amino acids
+            freq = [counts.get(aa, 0) for aa in AMINO_ACIDS]
+
+            writer.writerow([fname, length, first5] + freq)
 
 def generate_plots(all_results):
     """Generate figures for research documentation."""
@@ -67,7 +79,7 @@ def generate_plots(all_results):
     plt.savefig(os.path.join(RESULTS_PLOT_DIR, "sequence_length_distribution.png"))
     plt.close()
 
-    # 2. Amino acid frequency
+    # 2. Amino acid frequency (global across dataset)
     aa_counts = Counter()
     for data in all_results.values():
         aa_counts.update(data["sequence"])
