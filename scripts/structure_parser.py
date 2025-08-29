@@ -55,4 +55,12 @@ def main():
 
     # save CSV
     fieldnames = ["File", "Length", "First_5"] + AMINO_ACIDS
-    with open(OUTPUT
+    with open(OUTPUT_CSV, "w", newline="") as cf:
+        writer = csv.DictWriter(cf, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(results)
+
+    print(f"\n📂 Saved results -> {OUTPUT_JSON} & {OUTPUT_CSV}")
+
+if __name__ == "__main__":
+    main()
